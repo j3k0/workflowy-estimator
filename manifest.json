@@ -4,7 +4,7 @@
 
   "name": "WorkFlowy Estimator",
   "description": "Compute estimates right from Workflowy! {openSource}",
-  "version": "0.2.0",
+  "version": "0.2.1",
 
   "icons": {
     "128": "wfe_icon.png"

@@ -1,4 +1,4 @@
-/*! workflowy-estimator v0.2.0 by jchoelt */
+/*! workflowy-estimator v0.2.1 by jchoelt */
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -47,11 +47,15 @@
   }
 
   function roundNumber(n) {
-      if (n > 2000)
+      if (n > 5000)
           return Math.round(n / 500) * 500;
-      else if (n > 200)
+      else if (n > 2000)
+          return Math.round(n / 100) * 100;
+      else if (n > 500)
           return Math.round(n / 50) * 50;
-      else if (n > 20)
+      else if (n > 200)
+          return Math.round(n / 10) * 10;
+      else if (n > 50)
           return Math.round(n / 5) * 5;
       else
           return Math.round(n);
@@ -80,21 +84,10 @@
 
   function gaussian_rand() {
     var rand = 0;
-    for (var i = 0; i < 100; i += 1) {
+    for (var i = 0; i < 6; i += 1) {
       rand += Math.random();
     }
-    return rand / 100;
-  }
-
-  function gaussian_random(start, end) {
-    return Math.round(start + gaussian_rand() * (end - start));
-  }
-
-  function gaussian_squared_random(start, end) {
-    const start2 = Math.sqrt(start);
-    const end2 = Math.sqrt(end);
-    const ret2 = gaussian_random(start2, end2);
-    return ret2 * ret2;
+    return rand / 6;
   }
 
   // Workflowy DOM
@@ -169,9 +162,9 @@
           if (a == b)
               total += a;
           else {
-              let d = 4 * (b - a);
+              let d = 0.5 * (b - a);
               let ad = a - d;
-              total += ad + gaussian_random(0, b + d - ad);
+              total += ad + gaussian_rand() * (b + d - ad);
           }
       }
       return total;
