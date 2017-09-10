@@ -1,4 +1,4 @@
-/*! workflowy-estimator v0.1.0 by jeko */
+/*! workflowy-estimator v0.1.1 by jchoelt */
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -28,11 +28,11 @@
   // Need to fire once on load
   // Since the 'focusin' event doesn't happen right away
   window.addEventListener('load', function () {
-    setup();
+      setup();
   });
 
   window.addEventListener('focusin', function () {
-    setup();
+      setup_main_button();
   });
 
   // Range helper functions
@@ -192,7 +192,7 @@
   function total_quote_1(el) {
       const list = list_children_quotes(el);
       let all = many_gaussians(list, 1000);
-      console.log(many_gaussians(list, 10));
+      // console.log(many_gaussians(list, 10));
       return [
           all[0 + CONFIDENCE_OFFSET],
           all[999 - CONFIDENCE_OFFSET]
@@ -226,21 +226,33 @@
 
   // Extension setup
 
-  function setup() {
+  function setup_main_button() {
 
+      if (!window.$) return;
       const el = $(".mainTreeRoot");
       if (!el) return;
+      if (el.children(".quote").length > 0)
+          return;
 
-      $(".quote", el).remove();
-
-      find_quote(el);
-      el.prepend($('<a class="quote" style="display: block; color:blue; text-align:right; font-size: 10px; text-decoration: underline">Update Quotes</a>'));
+      el.prepend($('<a class="quote" style="display: block; color:blue; text-align:right; font-size: 10px; text-decoration: underline">Refresh Estimates</a>'));
       el.children(".quote").click(function(e) {
           e.preventDefault();
           setup();
       });
   }
 
-  setup();
+  function setup() {
+
+      if (!window.$) return;
+      const el = $(".mainTreeRoot");
+      if (!el) return;
+
+      $(".quote", el).remove();
+      setup_main_button();
+
+      find_quote(el);
+  }
+
+  // setup();
 
 }());
