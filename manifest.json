@@ -1,0 +1,22 @@
+{
+
+  "manifest_version": 2,
+
+  "name": "WorkFlowy Estimator",
+  "description": "Compute estimates right from Workflowy! {openSource}",
+  "version": "0.1.0",
+
+  "icons": {
+    "128": "wfe_icon.png"
+  },
+
+  "content_scripts": [{
+    "run_at": "document_end",
+    "matches": ["https://workflowy.com/*"],
+    "css": [],
+    "js": [
+      "workflowy-estimator.js"
+    ]
+  }]
+
+}
