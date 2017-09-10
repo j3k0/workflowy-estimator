@@ -1,4 +1,4 @@
-/*! workflowy-estimator v0.1.1 by jchoelt */
+/*! workflowy-estimator v0.2.0 by jchoelt */
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -216,7 +216,7 @@
 
   function find_quote(el) {
       const text = nodeText(el).text();
-      if (text.match(/\$\$\$/)) {
+      if (text.match(/\$\$\$/) && !el.hasClass("parent")) {
           propagate_quote_into(el);
       }
       const children = nodeChildren(el);
