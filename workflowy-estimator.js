@@ -1,4 +1,4 @@
-/*! workflowy-estimator v0.2.1 by jchoelt */
+/*! workflowy-estimator v0.3.0 by jchoelt */
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -31,9 +31,10 @@
       setup();
   });
 
-  window.addEventListener('focusin', function () {
-      setup_main_button();
-  });
+  window.addEventListener('focusin', debounce(setup, 3000, {
+      leading: true,
+      trailing: true
+  }));
 
   // Range helper functions
 
