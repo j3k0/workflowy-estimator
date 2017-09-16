@@ -1,4 +1,4 @@
-/*! workflowy-estimator v0.3.0 by jchoelt */
+/*! workflowy-estimator v0.3.1 by jchoelt */
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -49,14 +49,12 @@
 
   function roundNumber(n) {
       if (n > 5000)
-          return Math.round(n / 500) * 500;
-      else if (n > 2000)
           return Math.round(n / 100) * 100;
-      else if (n > 500)
+      else if (n > 2000)
           return Math.round(n / 50) * 50;
-      else if (n > 200)
+      else if (n > 500)
           return Math.round(n / 10) * 10;
-      else if (n > 50)
+      else if (n > 200)
           return Math.round(n / 5) * 5;
       else
           return Math.round(n);
@@ -64,7 +62,7 @@
 
   function formatRange(quote) {
       if (quote[0] == quote[1])
-          return '$' + roundNumber(quote[0]);
+          return '$' + Math.round(quote[0]);
       else {
           const avg = Math.round(quote[0] + quote[1]) / 2;
           const diff = Math.round(quote[1] - quote[0]) / 2;
@@ -163,6 +161,8 @@
           if (a == b)
               total += a;
           else {
+              // Here we adjust the range so the gaussian might go outside the user input (with a 5% probability)
+              // This has been calibrated manually, using a single node test
               let d = 0.5 * (b - a);
               let ad = a - d;
               total += ad + gaussian_rand() * (b + d - ad);
